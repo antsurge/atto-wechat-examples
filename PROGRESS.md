@@ -8,9 +8,9 @@
 
 - 小程序
   - 小程序登录
-    - [] 小程序登录凭证校验（code2Session）
-    - [] 检验登录态（checkSessionKey）
-    - [] 重置登录态（resetUserSessionKey）
+    - [x] 小程序登录凭证校验（code2Session）
+    - [x] 检验登录态（checkSessionKey）
+    - [x] 重置登录态（resetUserSessionKey）
   - 用户信息
     - 用户信息
       - [ ] 获取插件用户openpid

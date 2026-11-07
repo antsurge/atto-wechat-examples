@@ -6,20 +6,32 @@
 package main
 
 import (
+	"bufio"
 	"context"
-	"flag"
+	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/antsurge/atto-wechat/platform/miniProgram"
 )
 
 func main() {
-	code := flag.String("code", "", "wx.login 返回的临时 code")
-	flag.Parse()
+	reader := bufio.NewReader(os.Stdin)
 
-	if *code == "" {
-		log.Fatal("请通过 -code 传入 wx.login 返回的 code")
+	fmt.Print("请输入 wx.login 返回的临时 code：")
+
+	code, err := reader.ReadString('\n')
+	if err != nil {
+		fmt.Println("读取失败：", err)
+		return
+	}
+
+	code = strings.TrimSpace(code)
+
+	if code == "" {
+		fmt.Println("code 不能为空")
+		return
 	}
 
 	app, err := miniProgram.New(&miniProgram.Config{
@@ -30,7 +42,7 @@ func main() {
 		log.Fatalf("初始化失败: %v", err)
 	}
 
-	res, err := app.Code2Session(context.Background(), *code)
+	res, err := app.Code2Session(context.Background(), code)
 	if err != nil {
 		log.Fatalf("调用失败: %v", err)
 	}
